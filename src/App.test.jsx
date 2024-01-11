@@ -74,8 +74,18 @@ describe("Filter behaviour", () => {
 // 7)check SingleComment non venga renderizzato all avvio
 describe("check singleComment", () => {
   test("check singleComment", () => {
-    render(<SingleComment />);
-    const singleCommentComp = screen.getByTestId(/component-welcome/i);
-    expect(singleCommentComp).toBeInTheDocument();
+    render(<App />);
+    const singleCommentComp = screen.queryAllByTestId(/singlecomment/i);
+    expect(singleCommentComp).toHaveLength(0);
+  });
+});
+// 8)check SingleComment after click
+describe("check singleComment click", () => {
+  test("check singleComment click", async () => {
+    render(<App />);
+    const listItems = await screen.findAllByTestId("bookcover");
+    fireEvent.click(listItems[0]);
+    const singleCommentComp = await screen.findAllByTestId(/singlecomment/i);
+    expect(singleCommentComp[0]).toBeInTheDocument();
   });
 });
